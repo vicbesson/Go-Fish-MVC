@@ -1,0 +1,53 @@
+build-game:
+   stage: build
+   script:
+      - make gofish
+   artifacts:
+      paths:
+         - gofish
+
+build-tests:
+   stage: build
+   script:
+      - make test_gofish
+   artifacts:
+      paths:
+         - test_gofish
+
+test:
+   stage: test
+   script:
+      - test_gofish
+
+staticAnalysis:
+   stage: test
+   script:
+      - make static
+
+style:
+  stage: test
+  script:
+    - make style
+
+coverage:
+   stage: test
+   script:
+      - make coverage
+   artifacts:
+      paths:
+         - coverage
+      expire_in: 14 days
+
+memoryLeaks:
+   stage: test
+   script:
+      - make fullmemcheck
+
+docs:
+   stage: deploy
+   script:
+      - make docs
+   artifacts:
+      paths:
+         - docs
+      expire_in: 14 days
